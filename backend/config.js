@@ -1,2 +1,2 @@
-JWT_SECRET =  "kirat"
+JWT_SECRET =  "kiratsecret"
 module.exports  = JWT_SECRET
