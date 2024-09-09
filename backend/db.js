@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 
-mongoose.connect("--fbwhdfhsdf");
+mongoose.connect("mongodb+srv://aditya:4adi2504@cluster0.guwptrv.mongodb.net/");
 
 const userSchema =  mongoose.Schema({
     username: String,
