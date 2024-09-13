@@ -47,15 +47,35 @@ router.post("/signup" , async (req , res)=> {
 })
 
 
-router.post("/signin" , (req ,res) => {
-    const username =  req.body.username;
-    const password = req.body.password;
-    if(signupSchema.username == username &&  signupSchema.password == password) {
-        jwt.verify(token ,  JWT_SECRET);
-        res.json({
-            message: "User Signed In Succesfully"
+router.post("/signin" , async (req ,res) => {
+   const  {username ,  password} =  req.body;
+     if(!username  || !password) {
+        return res.status(400).json({
+            message: "Username asd Password is Required";
         })
-    }
+     }
+
+
+     try{
+        const user = await User.findOne({username})
+
+        if(!user) {
+            return res.status(400).json({
+                message: "Invalid Credentials"
+            })
+
+            if(user.password !=  password) {
+                return res.status(400).json({
+                    message: "Invalid Credentials"
+                })
+            }
+        }
+
+     } catch(err) {
+        return res.status(400).json({
+            message: "Internal Error is Occured"
+        })
+     }
 })
 
 module.exports = router;
