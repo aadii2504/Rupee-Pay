@@ -93,12 +93,39 @@ router.put("/" , authMiddleware , async (req , res) => {
       message: "Error while updating the information :( "
     })
   }
-  try {
+  
+  await User.updateOne(req.body, {
+    id:req.userId
+  })
 
-    
-  } catch (error) {
-    
-  }
+  res.json({
+    message: "Information updated successfully"
+  })
+})
+
+router.get("/bulk" , async (req, res) => {
+  const filter =  req.query.filter || "";
+
+  const   users = await User.find({
+    $or: [{
+      firstName: {
+        $regex: filter
+      }
+    }, {
+      lastname: {
+        $regex: filter
+      }
+    }]
+  })
+
+  res.json({
+    user: users.map(user => ({
+      username: user.username,
+      firstName: user.firstName,
+      lastname : user.lastname,
+      _id: user._id
+    }))
+  })
 })
 
 
