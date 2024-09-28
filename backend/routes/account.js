@@ -32,4 +32,27 @@ router.post("/", authmiddleware , async(req, res) => {
             })
      }
 
-})
+     const toAccount = await Account.findOne({userId: to}).session(session)
+
+
+     if(!toAccount) {
+        await session.abortTransaction()
+
+        return res.status(400).json({
+            message: "User Not Exists :("
+        })
+     }
+
+
+     await Account.UpdateOne({userId: req.userId}, {$inc: {balance: -amount}}).session(session)
+     await Account.UpdateOne({userId: to} , {$inc: {balance: amount}}).session(session)
+
+
+     await session.commitTransaction()
+
+     res.json({
+        message: "Transfer Succesfull"
+     });
+});
+
+module.exports = router;
