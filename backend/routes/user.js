@@ -7,8 +7,9 @@ const JWT_SECRET = require("../config");
 const { authMiddleware } = require("../middleware");
 
 const signupBody = zod.object({
-  username: zod.string(),
+  username: zod.string().email(),
   firstName: zod.string(),
+  lastname: zod.string(),
   password: zod.string(),
 });
 
@@ -16,7 +17,7 @@ const signupBody = zod.object({
 
 router.post("/signup", async (req, res) => {
   const body = req.body;
-  const { success } = signupSchema.safeParse(req.body);
+  const { success } = signupBody.safeParse(req.body);
   if (!success) {
     return res.json({
       message: "Email already exists / Incorrect Input",
