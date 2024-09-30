@@ -6,7 +6,7 @@ const router = express.Router();
 const JWT_SECRET = require("../config");
 const { authMiddleware } = require("../middleware");
 
-const signupSchema = zod.object({
+const signupBody = zod.object({
   username: zod.string(),
   firstName: zod.string(),
   password: zod.string(),
@@ -23,17 +23,31 @@ router.post("/signup", async (req, res) => {
     });
   }
 
-  const user = User.findOne({
+  const existingUser = await User.findOne({
     username: body.username,
   });
 
-  if (user._id) {
-    return res.json({
+  if (existingUser) {
+    return res.status(411).json({
       message: "Email already exists / Incorrect Input",
     });
   }
 
-  await User.create(body);
+  const user = await User.create({
+      username: req.body.username,
+      password: req.body.password,
+      firstName: req.body.firstName,
+      lastname: req.body.lastname,
+  });
+
+  const userId = user._id;
+
+
+  await Account.create({
+    userId,
+    balance: 1 + Math.random() * 10000
+  })
+
   const token = jwt.sign(
     {
       userId: dbUser._id,
