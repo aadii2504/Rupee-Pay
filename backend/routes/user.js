@@ -52,8 +52,7 @@ router.post("/signup", async (req, res) => {
   const token = jwt.sign(
     {
       userId: dbUser._id,
-    },
-    JWT_SECRET
+    },JWT_SECRET
   );
 
   res.json({
@@ -62,12 +61,17 @@ router.post("/signup", async (req, res) => {
   });
 });
 
+const signinbody = zod.object({
+  username : zod.string().email(),
+  password: zod.string()
+})
+
 router.post("/signin", async (req, res) => {
   const { success } = signupSchema.safeParse(req.body);
   
   if (!success) {
     return res.status(411).json({
-      message: "Username asd Password is Required",
+      message: "Username and Password is Required  / Incorrect Inputs ",
     });
   }
 
@@ -86,6 +90,7 @@ router.post("/signin", async (req, res) => {
     res.json({
       token: token
     })
+    return;
   }
 
   res.status(411).json({
