@@ -17,7 +17,9 @@ router.get("/balance" , authmiddleware , async (req ,  res) => {
 
 
 router.post("/", authmiddleware , async(req, res) => {
-     const session = await startSession();
+
+    try {
+        const session = await startSession();
 
      session.startTransaction()
 
@@ -53,6 +55,16 @@ router.post("/", authmiddleware , async(req, res) => {
      res.json({
         message: "Transfer Succesfull"
      });
+        
+    } catch (error) {
+        await session.abortTransaction()
+        session.endsession()
+        return res.status(500).json({
+            message: "Transaction Failed",
+            error: error.message
+        })
+    }
+     
 });
 
 module.exports = router;
