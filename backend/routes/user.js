@@ -21,6 +21,7 @@ router.post("/signup", async (req, res) => {
   if (!success) {
     return res.status(411).json({
       message: "Email already exists / Incorrect Input",
+      error : error.errors,
     });
   }
 
@@ -51,11 +52,11 @@ router.post("/signup", async (req, res) => {
 
   const token = jwt.sign(
     {
-      userId: dbUser._id,
+      userId: user._id,
     },JWT_SECRET
   );
 
-  res.json({
+  res.status(201).json({
     message: "User Created Successfully",
     token: token,
   });
@@ -72,6 +73,7 @@ router.post("/signin", async (req, res) => {
   if (!success) {
     return res.status(411).json({
       message: "Username and Password is Required  / Incorrect Inputs ",
+
     });
   }
 
@@ -114,9 +116,7 @@ router.put("/" , authMiddleware , async (req , res) => {
     })
   }
   
-  await User.updateOne(req.body, {
-    id:req.userId
-  })
+  await User.updateOne({_id: req.userId} ,  req.body)
 
   res.json({
     message: "Information updated successfully"
