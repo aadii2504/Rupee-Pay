@@ -64,7 +64,7 @@ router.post("/", authmiddleware , async(req, res) => {
             error: error.message
         })
     }
-     
 });
+
 
 module.exports = router;
