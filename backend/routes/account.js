@@ -15,7 +15,7 @@ router.get("/balance" , authmiddleware , async (req ,  res) => {
         })
 })
 
-
+// in this req the user has given some balance 
 router.post("/", authmiddleware , async(req, res) => {
 
     try {
