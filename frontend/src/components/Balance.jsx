@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Balance = () => {
+export const Balance = () => {
   return (
     <div className='flex'>
         <div className='font-bold text-lg'>
@@ -14,4 +14,3 @@ const Balance = () => {
   )
 }
 
-export default Balance
