@@ -3,7 +3,7 @@ import { Button } from "./Button"
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Users = () => {
+export const Users = () => {
   const [users, setUsers] = useState([]);
   const [filter, setFilter] = useState("");
 
@@ -60,4 +60,4 @@ function User({user}) {
   </div>
 }
 
-export default Users;
+
