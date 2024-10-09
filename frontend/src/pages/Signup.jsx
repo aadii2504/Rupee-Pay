@@ -32,7 +32,18 @@ export const Signup = () => {
           setPassword(e.target.value);
         }} placeholder="123456" label={"Password"} />
         <div className="pt-4">
-          <Button  label={"Sign up"} />
+          <Button onClick={() => {
+            const response  = axios.post("https//localhost300//api/user/v1/signup")={
+              username,
+              firstName,
+              lastName,
+              password
+            }
+            localStorage.setItem("token" , response.data.token)
+            navigate("/dashboard")
+            
+
+          }} label={"Sign up"} />
         </div>
         <BottomWarning label={"Already have an account?"} buttonText={"Sign in"} to={"/signin"} />
       </div>
