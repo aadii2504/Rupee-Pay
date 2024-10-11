@@ -1,61 +1,56 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 
 
 mongoose.connect("mongodb+srv://aditya:4adi2504@cluster0.guwptrv.mongodb.net/");
 
-const userSchema =  mongoose.Schema({
+// Create a Schema for Users
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
         unique: true,
-        trim : true,
-        lowercase : true,
-        minlength: 3,
-        maxlength : 30
-
+        trim: true,
+        lowercase: true,
+        minLength: 3,
+        maxLength: 30
     },
     password: {
-        type: String, 
-        required: true,
-        minLength : 6
-    },
-    firstname: {
         type: String,
         required: true,
-        trim : true ,
-        maxLength : 30
+        minLength: 6
     },
-    lastname:  {
-        type : String,
-        required : true ,
-        trim : true,
-        maxLength : 30
-    }
-})
- 
-
-
-const accountSchema  = new mongoose.Schema({
-    userId : {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+    firstName: {
+        type: String,
         required: true,
-
+        trim: true,
+        maxLength: 50
     },
-    balance :{
-        type: Number,
-        required : true
+    lastName: {
+        type: String,
+        required: true,
+        trim: true,
+        maxLength: 50
     }
+});
 
-})
+const accountSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId, // Reference to User model
+        ref: 'User',
+        required: true
+    },
+    balance: {
+        type: Number,
+        required: true
+    }
+});
 
+const Account = mongoose.model('Account', accountSchema);
+const User = mongoose.model('User', userSchema);
 
-const Account = mongoose.model('Account' , accountSchema)
-const User = mongoose.model("User" ,  userSchema);
-
-module.export = {
-    User,
+module.exports = {
+	User,
     Account
-}
+};
 
