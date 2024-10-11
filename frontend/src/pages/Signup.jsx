@@ -19,27 +19,27 @@ export const Signup = () => {
       <div className="rounded-lg bg-white w-80 text-center p-2 h-max px-4">
         <Heading label={"Sign up"} />
         <SubHeading label={"Enter your infromation to create an account"} />
-        <InputBox  onChange={ e=> {
-          setFirstName(e.target.value)
+        <InputBox onChange={e => {
+          setFirstName(e.target.value);
         }} placeholder="John" label={"First Name"} />
-        <InputBox  onChange={(e) => {
-            setLastName(e.target.value);
-        }} placeholder="Doe" label={"Last Name"} />
-        <InputBox onChange={(e)=> {
-          setUsername(e.target.value)
-        }} placeholder="xyz@gmail.com" label={"Email"} />
         <InputBox onChange={(e) => {
-          setPassword(e.target.value);
+          setLastName(e.target.value);
+        }} placeholder="Doe" label={"Last Name"} />
+        <InputBox onChange={e => {
+          setUsername(e.target.value);
+        }} placeholder="harkirat@gmail.com" label={"Email"} />
+        <InputBox onChange={(e) => {
+          setPassword(e.target.value)
         }} placeholder="123456" label={"Password"} />
         <div className="pt-4">
-          <Button onClick={() => {
-            const response  = axios.post("https//localhost300//api/user/v1/signup")={
+          <Button onClick={async () => {
+            const response = await axios.post("http://localhost:3000/api/v1/user/signup", {
               username,
               firstName,
               lastName,
               password
-            }
-            localStorage.setItem("token" , response.data.token)
+            });
+            localStorage.setItem("token", response.data.token)
             navigate("/dashboard")
           }} label={"Sign up"} />
         </div>
