@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 mongoose.connect("mongodb+srv://aditya:4adi2504@cluster0.guwptrv.mongodb.net/")
 
+
 // Create a Schema for Users
 const userSchema = new mongoose.Schema({
     username: {
