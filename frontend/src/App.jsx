@@ -22,7 +22,8 @@ function App() {
         <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/send" element={<SendMoney/>}/>  
       </Routes>
-      </BrowserRouter>
+      </BrowserRouter> 
+      {/* completed */}
     </>
   )
 }
