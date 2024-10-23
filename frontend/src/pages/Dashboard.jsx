@@ -29,15 +29,12 @@ export const Dashboard = () => {
 
         fetchBalance(); // Call the function to fetch balance
     }, []); // Empty dependency array ensures this runs once when the component mounts
-
     if (loading) {
         return <div>Loading balance...</div>;
     }
-
     if (error) {
         return <div>{error}</div>;
     }
-
     return (
         <div>
             <Appbar />
